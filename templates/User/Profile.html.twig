@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="card" style="max-width: 600px; margin: 0 auto;">
+            <h1>My Profile</h1>
+
+            <div style="text-align: center; margin-bottom: 30px;">
+                <div style="display: inline-block; position: relative;">
+                    {% if user.profilePicture %}
+                        <img src="{{ asset(user.profilePicture) }}" alt="Profile Picture"
+                             style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 3px solid #3498db;">
+                    {% else %}
+                        <div style="width: 150px; height: 150px; border-radius: 50%; background-color: #ddd; display: flex; align-items: center; justify-content: center; border: 3px solid #3498db;">
+                            <span style="font-size: 48px; color: #666;">👤</span>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <form method="post" enctype="multipart/form-data" style="margin-top: 20px;">
+                    <div class="form-group">
+                        <label for="profile_picture" style="display: block; margin-bottom: 10px;">Change Profile Picture</label>
+                        <input type="file" name="profile_picture" id="profile_picture" accept="image/*" style="margin-bottom: 10px;">
+                        <br>
+                        <button type="submit" class="btn">Upload Picture</button>
+                    </div>
+                </form>
+            </div>
+
+            <div style="border-top: 1px solid #eee; padding-top: 20px;">
+                <h3>Account Information</h3>
+                <div style="background-color: #f9f9f9; padding: 15px; border-radius: 5px;">
+                    <p><strong>Email:</strong> {{ user.email }}</p>
+                    <p><strong>Account Status:</strong>
+                        {% if user.enabled %}
+                            <span style="color: green;">✓ Verified</span>
+                        {% else %}
+                            <span style="color: orange;">⚠ Unverified</span>
+                        {% endif %}
+                    </p>
+                    <p><strong>Member Since:</strong> {{ user.id ? 'User #' ~ user.id : 'N/A' }}</p>
+                </div>
+            </div>
+
+            <div style="border-top: 1px solid #eee; padding-top: 20px; margin-top: 20px;">
+                <h3>Quick Actions</h3>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <a href="{{ path('app_home_index') }}" class="btn">View Posts</a>
+                    <a href="{{ path('app_post_create') }}" class="btn">Create New Post</a>
+                    <a href="{{ path('_logout_main') }}" class="btn" style="background-color: #e74c3c;">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

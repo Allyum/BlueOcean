@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+        {% block stylesheets %}
+        <style>
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                line-height: 1.6;
+                color: #333;
+                background-color: #f8f9fa;
+                margin: 0;
+                padding: 0;
+            }
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+            }
+            h1, h2, h3 {
+                color: #2c3e50;
+                margin-bottom: 20px;
+            }
+            a {
+                color: #3498db;
+                text-decoration: none;
+            }
+            a:hover {
+                text-decoration: underline;
+            }
+            button, input[type="submit"] {
+                background-color: #3498db;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 16px;
+            }
+            button:hover, input[type="submit"]:hover {
+                background-color: #2980b9;
+            }
+            .card {
+                background: white;
+                border-radius: 8px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                padding: 20px;
+                margin: 20px 0;
+            }
+            .btn {
+                display: inline-block;
+                padding: 8px 16px;
+                background-color: #3498db;
+                color: white;
+                text-decoration: none;
+                border-radius: 4px;
+                margin: 5px;
+            }
+            .btn:hover {
+                background-color: #2980b9;
+            }
+            .form-group {
+                margin-bottom: 15px;
+            }
+            label {
+                display: block;
+                margin-bottom: 5px;
+                font-weight: bold;
+            }
+            input[type="text"], input[type="email"], input[type="password"], textarea {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                box-sizing: border-box;
+            }
+        </style>
+        {% endblock %}
+
+        {% block javascripts %}
+        {% endblock %}
+    </head>
+    <body>
+        <nav style="background-color: #2c3e50; color: white; padding: 10px 0;">
+            <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+                <h2 style="margin: 0; color: white;">BlueOcean</h2>
+                <div>
+                    {% if app.user %}
+                        <span>Welcome, {{ app.user.email }}</span>
+                        <a href="{{ path('_logout_main') }}" class="btn" style="margin-left: 10px;">Logout</a>
+                    {% else %}
+                        <a href="{{ path('app_login') }}" class="btn">Login</a>
+                        <a href="{{ path('user_register') }}" class="btn">Register</a>
+                    {% endif %}
+                    <a href="{{ path('app_home_index') }}" class="btn">Home</a>
+                    {% if is_granted('ROLE_USER') %}
+                        <a href="{{ path('app_profile') }}" class="btn">Profile</a>
+                        <a href="{{ path('app_post_create') }}" class="btn">New Post</a>
+                    {% endif %}
+                </div>
+            </div>
+        </nav>
+        {% block body %}{% endblock %}
+    </body>
+</html>

@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        {% if is_granted('ROLE_ADMIN') %}
+            <div class="card">
+                <strong>Administrateur</strong>
+            </div>
+        {% endif %}
+        {% if is_granted('ROLE_USER') %}
+            <div class="card">
+                <p>Bonjour {{ app.user.email }}</p>
+            </div>
+        {% else %}
+            <div class="card">
+                <p>Bonjour anonyme</p>
+            </div>
+        {% endif %}
+
+        <h2>Recent Posts</h2>
+        {% for post in posts %}
+            <a href="{{ path('app_post_show', {'id': post.id}) }}" style="text-decoration: none; color: inherit;">
+                <div class="card">
+                    {% include 'Widget/Post.html.twig' with {'post': post} %}
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+{% endblock body %}
